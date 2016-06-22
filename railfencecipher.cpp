@@ -5,6 +5,7 @@
 using namespace std;
 
 enum action { ENCRYPT, DECRYPT };
+
 string crypt(action type, int nrails, string data) 
 {
 	//make an int called cyclesize 2 times (nrails -1)

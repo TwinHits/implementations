@@ -12,7 +12,7 @@ std::vector<T> CountSplitInversions(std::vector<T>& v, const std::vector<T>& a, 
 	std::vector<T> result;
 	for (auto i = a.begin(), j = b.begin(); result.size() != a.size() + b.size();)
 	{
-		//For each n in a and be, until the size of result == size of a + size of b
+		//For each n in a and b, until the size of result == size of a + size of b
 		//liberal use of != a.end() to handle odd sized vectors
 		//if i > j, that is an inversion, so ++ the count by the num of remaining things in the subarray.
 		//Doing this accounts for the inversions that would be passed over with ++J
