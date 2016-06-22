@@ -3,6 +3,10 @@
 
 #include <iostream>
 
+//A binary search tree is a top down set of nodes with ptr's to the next nodes
+//starting with the root.
+//
+
 template<typename T>
 class node 
 {
