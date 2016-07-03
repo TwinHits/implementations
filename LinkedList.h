@@ -1,31 +1,38 @@
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
+
+#include "Iterator.h"
+
 #include <iostream>
-#include <algorithm>
-#include <vector>
 
 template <typename T>
-class node {
+class Node {
 	public:
+		typedef T value_type;
 		T data;
-		node* next;
+		Node* next;
 };
 
 template <typename T>
 class LinkedList 
 {
 	private:
-		node<T>* head;
-		void Remove();
+		Node<T>* head;
+		int size;
+
+		void remove();
 
 	public:
 		LinkedList();
 		~LinkedList();
-		void Print(); void Insert(T input);
-		void Remove(node<T>* n);
-		void Remove(T n);
-		node<T>* KthNodeFromEnd(int k);
-		node<T>* Reverse();
-		void RemoveDupesBuffed();
-		void RemoveDupesUnBuffed();
+		int getSize();
+		void insert(T input);
+		void remove(Node<T>* n);
+		void remove(T n);
+		Node<T>* kthNodeFromEnd(int k);
+		Node<T>* reverse();
+
+		Iterator<Node<T> > begin();
 };
 
 template <typename T>
@@ -39,43 +46,34 @@ LinkedList<T>::~LinkedList()
 {
 	while(head != nullptr)
 	{
-		Remove();
+		remove();
 	}
 }
 
 template <typename T>
-void LinkedList<T>::Print()
+void LinkedList<T>::insert(T input)
 {
-	node<T>* elem = head;
-	while (elem != nullptr)
-	{
-		std::cout << elem->data << std::endl;
-		elem = elem->next;
-	} 
-}
-
-template <typename T>
-void LinkedList<T>::Insert(T input)
-{
-	node<T>* insert = new node<T>;
+	Node<T>* insert = new Node<T>;
 	insert->data = input;
 	insert->next = head;
 	head = insert;
+	++size;
 }
 
 template <typename T>
-void LinkedList<T>::Remove()
+void LinkedList<T>::remove()
 {
-	node<T>* prev = head;
+	Node<T>* prev = head;
 	head = head->next;
 	delete prev;
+	--size;
 }
 
 template <typename T>
-void LinkedList<T>::Remove(node<T>* n)
+void LinkedList<T>::remove(Node<T>* n)
 {
-	node<T>* elem = head;
-	node<T>* prev = head;
+	Node<T>* elem = head;
+	Node<T>* prev = head;
 
 	while (elem != nullptr)
 	{
@@ -91,13 +89,14 @@ void LinkedList<T>::Remove(node<T>* n)
 			return;
 		}
 	}
+	--size;
 }
 
 template <typename T>
-void LinkedList<T>::Remove(T n)
+void LinkedList<T>::remove(T n)
 {
-	node<T>* elem = head;
-	node<T>* prev = head;
+	Node<T>* elem = head;
+	Node<T>* prev = head;
 
 	while (elem != nullptr)
 	{
@@ -116,11 +115,11 @@ void LinkedList<T>::Remove(T n)
 }
 
 template <typename T>
-node<T>* LinkedList<T>::KthNodeFromEnd(int k)
+Node<T>* LinkedList<T>::kthNodeFromEnd(int k)
 {
 	//iterate only once, ptr2 is always k steps behind ptr1
-	node<T>* ptr1 = head;
-	node<T>* ptr2 = head;
+	Node<T>* ptr1 = head;
+	Node<T>* ptr2 = head;
 	int i = 0;
 
 	while (ptr1 != nullptr)
@@ -136,11 +135,11 @@ node<T>* LinkedList<T>::KthNodeFromEnd(int k)
 }
 
 template<typename T>
-node<T>* LinkedList<T>::Reverse()
+Node<T>* LinkedList<T>::reverse()
 {
-	node<T>* prev = head;
-	node<T>* cur = head->next;
-	node<T>* ptr = cur->next;
+	Node<T>* prev = head;
+	Node<T>* cur = head->next;
+	Node<T>* ptr = cur->next;
 
 	prev->next = nullptr;
 	while (cur->next != nullptr)
@@ -157,64 +156,16 @@ node<T>* LinkedList<T>::Reverse()
 	return head;
 }
 
-template <typename T>
-void LinkedList<T>::RemoveDupesBuffed()
+template<typename T>
+int LinkedList<T>::getSize()
 {
-	
-	std::vector<T> buffer;
-	node<T>* elem = head;
-	node<T>* prev = head;
-
-	while (elem != nullptr)
-	{
-		if (std::find(buffer.begin(), buffer.end(), elem->data) != buffer.end() && elem != head)
-		{
-				prev->next = elem->next;
-				node<T>* deleted = elem;
-				elem = elem->next;
-				delete deleted;
-		}
-		else 
-		{
-			buffer.push_back(elem->data);
-			prev = elem;
-			elem = elem->next;
-		}
-	}
+	return this->size;
 }
 
-template <typename T>
-void LinkedList<T>::RemoveDupesUnBuffed()
+template<typename T>
+Iterator<Node<T> > LinkedList<T>::begin()
 {
-	node<T>* elem = head;
-	node<T>* prev = head;
-	node<T>* iter = head->next;
-
-	while (elem != nullptr)
-	{
-		if (iter != nullptr)
-		{
-			if (iter->data == elem->data)
-			{
-				prev->next = iter->next;
-				node<T>* deleteme = iter;
-				iter = iter->next;
-				delete deleteme;
-			}
-			else if (iter->data != elem->data)
-			{
-				prev = iter;
-				iter = iter->next;
-			}
-		}
-		else if (iter == nullptr)
-		{
-			elem = elem->next;
-			if (elem != nullptr)
-			{
-				iter = elem->next;
-				prev = elem;
-			}
-		}
-	}
+	return Iterator<Node<T> >(*head);
 }
+
+#endif
