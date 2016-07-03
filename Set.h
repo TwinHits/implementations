@@ -31,7 +31,7 @@ void Set<T>::Union(Set<T>& rhs, node<T>* n, Set<T>& un)
 	//O(n)
 	if (n != nullptr)
 	{
-		un.insert(n->item);
+		un.insert(n->data);
 		this->Union(rhs, n->left, un);
 		this->Union(rhs, n->right, un);
 	}
@@ -43,8 +43,8 @@ void Set<T>::Intersection(Set<T>& rhs, node<T>* n, Set<T>& intersection)
 	//O(n)
 	if (n != nullptr)
 	{
-		if (this->search(n->item))
-			intersection.insert(n->item);
+		if (this->search(n->data))
+			intersection.insert(n->data);
 		
 		this->Intersection(rhs, n->left, intersection);
 		this->Intersection(rhs, n->right, intersection);
