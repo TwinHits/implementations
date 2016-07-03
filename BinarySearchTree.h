@@ -5,13 +5,12 @@
 
 //A binary search tree is a top down set of nodes with ptr's to the next nodes
 //starting with the root.
-//
 
 template<typename T>
 class node 
 {
 	public:
-		T item;
+		T data;
 		node<T>* left;
 		node<T>* right;
 
@@ -21,7 +20,7 @@ class node
 template<typename T>
 node<T>::node(T i)
 {
-	item = i;
+	data = i;
 	left = nullptr;
 	right = nullptr;
 }
@@ -86,9 +85,9 @@ bool BinarySearchTree<T>::TreeSearch(node<T>* r, T i)
 {
 	if (r == nullptr)
 		return false;
-	else if (r->item == i)
+	else if (r->data == i)
 		return true;	
-	else if (i > r->item)
+	else if (i > r->data)
 		return TreeSearch(r->right, i);
 	else
 		return TreeSearch(r->left, i);
@@ -99,9 +98,9 @@ void BinarySearchTree<T>::TreeInsert(node<T>*& n, T i)
 {
 		if (n == nullptr)
 			n = new node<T>(i);
-		else if (i > n->item)
+		else if (i > n->data)
 			TreeInsert(n->right, i);
-		else if (i < n->item)
+		else if (i < n->data)
 			TreeInsert(n->left, i);
 }
 
@@ -111,7 +110,7 @@ void BinarySearchTree<T>::InorderPrint(node<T>* r)
 	if (r != nullptr)
 	{
 		InorderPrint(r->left);	
-		std::cout << r->item << std::endl;
+		std::cout << r->data << std::endl;
 		InorderPrint(r->right);
 	}
 }
@@ -140,7 +139,7 @@ bool BinarySearchTree<T>::PreorderEquality(node<T>* n, BinarySearchTree<T>& rhs)
 
 	if (n != nullptr && check == true)
 	{
-		check = rhs.search(n->item);
+		check = rhs.search(n->data);
 
 		if (check == true)
 			check = PreorderEquality(n->left, rhs);
