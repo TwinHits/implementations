@@ -3,8 +3,6 @@
 
 #include "Iterator.h"
 
-#include <iostream>
-
 template <typename T>
 class Node {
 	public:
@@ -16,17 +14,18 @@ class Node {
 template <typename T>
 class LinkedList 
 {
+	friend class Iterator<Node<T> >;
+	
 	private:
-		Node<T>* head;
 		int size;
-
-		void remove();
+		Node<T>* head;
 
 	public:
 		LinkedList();
 		~LinkedList();
 		int getSize();
 		void insert(T input);
+		void remove(Iterator<Node<T> >& i);
 		void remove(Node<T>* n);
 		void remove(T n);
 		Node<T>* kthNodeFromEnd(int k);
@@ -46,7 +45,7 @@ LinkedList<T>::~LinkedList()
 {
 	while(head != nullptr)
 	{
-		remove();
+		remove(head);
 	}
 }
 
@@ -61,31 +60,26 @@ void LinkedList<T>::insert(T input)
 }
 
 template <typename T>
-void LinkedList<T>::remove()
-{
-	Node<T>* prev = head;
-	head = head->next;
-	delete prev;
-	--size;
-}
-
-template <typename T>
 void LinkedList<T>::remove(Node<T>* n)
 {
-	Node<T>* elem = head;
+	Node<T>* cur = head;
 	Node<T>* prev = head;
 
-	while (elem != nullptr)
+	while (cur != nullptr)
 	{
-		if (elem != n)
+		if (cur != n)
 		{
-			prev = elem;
-			elem = elem->next;
+			prev = cur;
+			cur = cur->next;
 		}
-		else if (elem == n)
+		else if (cur == n)
 		{
-			prev->next = elem->next;
-			delete elem;
+			if (cur == head)
+				head = cur->next;
+			else
+				prev->next = cur->next;
+
+			delete cur;
 			return;
 		}
 	}
@@ -112,6 +106,12 @@ void LinkedList<T>::remove(T n)
 			return;
 		}
 	}
+}
+
+template <typename T>
+void LinkedList<T>::remove(Iterator<Node<T> >& i)
+{
+	remove(i.node);
 }
 
 template <typename T>
@@ -165,7 +165,7 @@ int LinkedList<T>::getSize()
 template<typename T>
 Iterator<Node<T> > LinkedList<T>::begin()
 {
-	return Iterator<Node<T> >(*head);
+	return Iterator<Node<T> >(head);
 }
 
 #endif

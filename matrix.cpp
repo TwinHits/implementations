@@ -2,7 +2,6 @@
 #include <vector>
 
 //Strassen's Subcubic Matrix Multiplication Algorithm
-//INCOMPLETE
 
 int main()
 {

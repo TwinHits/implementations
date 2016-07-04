@@ -10,21 +10,18 @@ class Node;
 template <typename T>
 class LinkedList;
 
-template <typename T>
-class Node;
-
 template <typename N>
 class Iterator 
 {
 	friend class LinkedList<typename N::value_type>;
 
 	private:
-		N& node;
+		N* node;
 
 	public:
-		Iterator(N& n) : node(n) {};
+		Iterator(N* n) : node(n) {};
 
-		typename N::value_type operator*();
+		typename N::value_type& operator*();
 		bool operator==(const Iterator<N>& rhs);
 		bool operator!=(const Iterator<N>& rhs);
 		Iterator<N> operator+(int steps);
@@ -32,9 +29,9 @@ class Iterator
 };
 
 template <typename N>
-typename N::value_type Iterator<N>::operator*()
+const typename N::value_type& Iterator<N>::operator*()
 {
-	return this->node.data;
+	return this->node->data;
 }
 
 template <typename N>
@@ -53,9 +50,9 @@ template <typename N>
 Iterator<N> Iterator<N>::operator+(int steps)
 {
 	auto tmp = this->node;
-	for (int i = 0; i < steps && tmp.next != nullptr; ++i)
+	for (int i = 0; i < steps && tmp->next != nullptr; ++i)
 	{
-		tmp = *(tmp.next);
+		tmp = *(tmp->next);
 	}
 	return Iterator<N>(tmp);
 }
@@ -63,8 +60,8 @@ Iterator<N> Iterator<N>::operator+(int steps)
 template <typename N>
 Iterator<N> Iterator<N>::operator++()
 {
-	if (this->node.next != nullptr)
-		this->node = *(node.next);	
+	if (this->node->next != nullptr)
+		this->node = *(this->node->next);	
 	return *this;
 }
 
