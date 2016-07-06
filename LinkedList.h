@@ -4,34 +4,45 @@
 #include "Iterator.h"
 
 template <typename T>
-class Node {
+class LLNode {
 	public:
 		typedef T value_type;
 		T data;
-		Node* next;
+		LLNode* next;
+
+		LLNode<T>* operator+(int steps);
 };
+
+template <typename T>
+LLNode<T>* LLNode<T>::operator+(int steps)
+{
+	auto tmp = this;
+	for (int i = 0; i < steps && tmp->next != nullptr; ++i)
+	{
+		tmp = tmp->next;
+	}
+	return tmp;
+}
 
 template <typename T>
 class LinkedList 
 {
-	friend class Iterator<Node<T> >;
+	friend class Iterator<LLNode<T> >;
 	
 	private:
 		int size;
-		Node<T>* head;
+		LLNode<T>* head;
 
 	public:
 		LinkedList();
 		~LinkedList();
 		int getSize();
 		void insert(T input);
-		void remove(Iterator<Node<T> >& i);
-		void remove(Node<T>* n);
+		void remove(Iterator<LLNode<T> >& i);
+		void remove(LLNode<T>* n);
 		void remove(T n);
-		Node<T>* kthNodeFromEnd(int k);
-		Node<T>* reverse();
 
-		Iterator<Node<T> > begin();
+		Iterator<LLNode<T> > begin();
 };
 
 template <typename T>
@@ -52,7 +63,7 @@ LinkedList<T>::~LinkedList()
 template <typename T>
 void LinkedList<T>::insert(T input)
 {
-	Node<T>* insert = new Node<T>;
+	LLNode<T>* insert = new LLNode<T>;
 	insert->data = input;
 	insert->next = head;
 	head = insert;
@@ -60,37 +71,37 @@ void LinkedList<T>::insert(T input)
 }
 
 template <typename T>
-void LinkedList<T>::remove(Node<T>* n)
+void LinkedList<T>::remove(LLNode<T>* n)
 {
-	Node<T>* cur = head;
-	Node<T>* prev = head;
+	LLNode<T>* elem = head;
+	LLNode<T>* prev = head;
 
-	while (cur != nullptr)
+	while (elem != nullptr)
 	{
-		if (cur != n)
+		if (elem != n)
 		{
-			prev = cur;
-			cur = cur->next;
+			prev = elem;
+			elem = elem->next;
 		}
-		else if (cur == n)
+		else if (elem == n)
 		{
-			if (cur == head)
-				head = cur->next;
+			if (elem == head)
+				head = elem->next;
 			else
-				prev->next = cur->next;
+				prev->next = elem->next;
 
-			delete cur;
+			delete elem;
+			--size;
 			return;
 		}
 	}
-	--size;
 }
 
 template <typename T>
 void LinkedList<T>::remove(T n)
 {
-	Node<T>* elem = head;
-	Node<T>* prev = head;
+	LLNode<T>* elem = head;
+	LLNode<T>* prev = head;
 
 	while (elem != nullptr)
 	{
@@ -101,59 +112,22 @@ void LinkedList<T>::remove(T n)
 		}
 		else if (elem->data == n)
 		{
-			prev->next = elem->next;
+			if (elem == head)
+				head = elem->next;
+			else
+				prev->next = elem->next;
+
 			delete elem;
+			--size;
 			return;
 		}
 	}
 }
 
 template <typename T>
-void LinkedList<T>::remove(Iterator<Node<T> >& i)
+void LinkedList<T>::remove(Iterator<LLNode<T> >& i)
 {
 	remove(i.node);
-}
-
-template <typename T>
-Node<T>* LinkedList<T>::kthNodeFromEnd(int k)
-{
-	//iterate only once, ptr2 is always k steps behind ptr1
-	Node<T>* ptr1 = head;
-	Node<T>* ptr2 = head;
-	int i = 0;
-
-	while (ptr1 != nullptr)
-	{
-		ptr1 = ptr1->next;
-		++i;
-		if (i > k)
-		{
-			ptr2 = ptr2->next;
-		}
-	}
-	return ptr2;
-}
-
-template<typename T>
-Node<T>* LinkedList<T>::reverse()
-{
-	Node<T>* prev = head;
-	Node<T>* cur = head->next;
-	Node<T>* ptr = cur->next;
-
-	prev->next = nullptr;
-	while (cur->next != nullptr)
-	{
-		cur->next = prev;
-		prev = cur;
-		cur = ptr;
-		ptr = ptr->next;
-	}
-	
-	cur->next = prev;
-	head = cur;
-
-	return head;
 }
 
 template<typename T>
@@ -163,9 +137,9 @@ int LinkedList<T>::getSize()
 }
 
 template<typename T>
-Iterator<Node<T> > LinkedList<T>::begin()
+Iterator<LLNode<T> > LinkedList<T>::begin()
 {
-	return Iterator<Node<T> >(head);
+	return Iterator<LLNode<T> >(head);
 }
 
 #endif
