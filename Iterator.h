@@ -4,26 +4,19 @@
 //Generic iterator for each data structure defined for easy traversal by other
 //code.
 
-template <typename T>
-class Node;
-
-template <typename T>
-class LinkedList;
-
 template <typename N>
 class Iterator 
 {
-	friend class LinkedList<typename N::value_type>;
-
+	
 	private:
 		N* node;
 
 	public:
 		Iterator(N* n) : node(n) {};
 
-		typename N::value_type& operator*();
+		const typename N::value_type& operator*();
 		bool operator==(const Iterator<N>& rhs);
-		bool operator!=(const Iterator<N>& rhs);
+		bool operator!=(const Iterator<N>& rhs); 
 		Iterator<N> operator+(int steps);
 		Iterator<N> operator++();
 };
@@ -49,19 +42,14 @@ bool Iterator<N>::operator!=(const Iterator<N>& rhs)
 template <typename N>
 Iterator<N> Iterator<N>::operator+(int steps)
 {
-	auto tmp = this->node;
-	for (int i = 0; i < steps && tmp->next != nullptr; ++i)
-	{
-		tmp = *(tmp->next);
-	}
-	return Iterator<N>(tmp);
+	N* result = *(this->node) + steps;
+	return Iterator<N>(result);
 }
 
 template <typename N>
 Iterator<N> Iterator<N>::operator++()
-{
-	if (this->node->next != nullptr)
-		this->node = *(this->node->next);	
+{	
+	this->node = *(this->node) + 1;
 	return *this;
 }
 

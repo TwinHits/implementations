@@ -4,9 +4,12 @@
 #include "BinarySearchTree.h"
 
 template <typename T>
-class Set: public BinarySearchTree<T>
+class Set
 {
+	friend class BinarySearchTree<T>;
+
 	public:
+		bool search(T i);
 		void insert(T i);
 
 		Set<T> operator+=(Set<T>& rhs);
@@ -14,19 +17,27 @@ class Set: public BinarySearchTree<T>
 		Set<T> operator*(Set<T>& rhs);
 
 	private:
-		void Union(Set<T>& rhs, node<T>* n, Set<T>& un);
-		void Intersection(Set<T>& rhs, node<T>* n, Set<T>& intersection);
+		BinarySearchTree<T> data;
+
+		void Union(Set<T>& rhs, BSTNode<T>* n, Set<T>& un);
+		void Intersection(Set<T>& rhs, BSTNode<T>* n, Set<T>& intersection);
 };
+
+template <typename T>
+bool Set<T>::search(T i)
+{
+	return data.search(i);
+}
 
 template <typename T>
 void Set<T>::insert(T i)
 {
 	if (!this->search(i))
-		this->BinarySearchTree<T>::insert(i);
+		data.insert(i);
 }
 
 template <typename T>
-void Set<T>::Union(Set<T>& rhs, node<T>* n, Set<T>& un)
+void Set<T>::Union(Set<T>& rhs, BSTNode<T>* n, Set<T>& un)
 {
 	//O(n)
 	if (n != nullptr)
@@ -38,7 +49,7 @@ void Set<T>::Union(Set<T>& rhs, node<T>* n, Set<T>& un)
 }
 
 template <typename T>
-void Set<T>::Intersection(Set<T>& rhs, node<T>* n, Set<T>& intersection)
+void Set<T>::Intersection(Set<T>& rhs, BSTNode<T>* n, Set<T>& intersection)
 {
 	//O(n)
 	if (n != nullptr)
