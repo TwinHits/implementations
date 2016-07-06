@@ -1,52 +1,64 @@
 #ifndef BINARYSEARCHTREE_H
 #define BINARYSEARCHTREE_H
 
-#include <iostream>
+#include "Iterator.h"
 
-//A binary search tree is a top down set of nodes with ptr's to the next nodes
+//A binary search tree is a top down set of BSTNodes with ptr's to the next BSTNodes
 //starting with the root.
 
-template<typename T>
-class node 
+template <typename T>
+class BSTNode 
 {
 	public:
-		T data;
-		node<T>* left;
-		node<T>* right;
+		typedef T value_type;
 
-		node(T i);
+		T data;
+		BSTNode<T>* left;
+		BSTNode<T>* right;
+
+		BSTNode(T i);
+		BSTNode<T>* operator+(int steps);
 };
 
-template<typename T>
-node<T>::node(T i)
+template <typename T>
+BSTNode<T>* BSTNode<T>::operator+(int steps)
+{
+	auto tmp = this;
+	while (steps > 0)
+	{
+		--steps;		
+	}
+	return tmp;
+}
+
+template <typename T>
+BSTNode<T>::BSTNode(T i)
 {
 	data = i;
 	left = nullptr;
 	right = nullptr;
 }
 
-template<typename T>
+template <typename T>
 class BinarySearchTree 
 {
+	private:
+		BSTNode<T>* root = nullptr;
+		int size = 0;
+		bool TreeSearch(BSTNode<T>* r, T i);
+		void TreeInsert(BSTNode<T>*& r, T i);
+		int CheckBalance(BSTNode<T>* n);
+		bool PreorderEquality(BSTNode<T>* n, BinarySearchTree<T>& rhs);
+
 	public:
 		bool search(T i);
 		void insert(T i);
 		bool balanced();
-		void print();
 
 		bool operator==(BinarySearchTree<T>& rhs);
 		BinarySearchTree<T> operator=(BinarySearchTree<T> rhs);
 
-	protected:
-		node<T>* root = nullptr;
-		int size = 0;
-
-	private:
-		bool TreeSearch(node<T>* r, T i);
-		void TreeInsert(node<T>*& r, T i);
-		void InorderPrint(node<T>* r);
-		int CheckBalance(node<T>* n);
-		bool PreorderEquality(node<T>* n, BinarySearchTree<T>& rhs);
+		Iterator<BSTNode<T> > begin();
 };
 
 template <typename T>
@@ -63,12 +75,6 @@ void BinarySearchTree<T>::insert(T i)
 }
 
 template <typename T>
-void BinarySearchTree<T>::print()
-{
-	InorderPrint(root);
-}
-
-template <typename T>
 bool BinarySearchTree<T>::balanced()
 {
 	int right = CheckBalance(root->right);
@@ -81,7 +87,7 @@ bool BinarySearchTree<T>::balanced()
 }
 
 template <typename T>
-bool BinarySearchTree<T>::TreeSearch(node<T>* r, T i)
+bool BinarySearchTree<T>::TreeSearch(BSTNode<T>* r, T i)
 {
 	if (r == nullptr)
 		return false;
@@ -94,29 +100,18 @@ bool BinarySearchTree<T>::TreeSearch(node<T>* r, T i)
 }
 
 template <typename T>
-void BinarySearchTree<T>::TreeInsert(node<T>*& n, T i)
+void BinarySearchTree<T>::TreeInsert(BSTNode<T>*& n, T i)
 {
 		if (n == nullptr)
-			n = new node<T>(i);
+			n = new BSTNode<T>(i);
 		else if (i > n->data)
 			TreeInsert(n->right, i);
 		else if (i < n->data)
 			TreeInsert(n->left, i);
 }
 
-template <typename T>
-void BinarySearchTree<T>::InorderPrint(node<T>* r)
-{
-	if (r != nullptr)
-	{
-		InorderPrint(r->left);	
-		std::cout << r->data << std::endl;
-		InorderPrint(r->right);
-	}
-}
-
 template<typename T>
-int BinarySearchTree<T>::CheckBalance(node<T>* n)
+int BinarySearchTree<T>::CheckBalance(BSTNode<T>* n)
 {
 	if (n != nullptr)
 	{
@@ -130,7 +125,7 @@ int BinarySearchTree<T>::CheckBalance(node<T>* n)
 }
 
 template<typename T>
-bool BinarySearchTree<T>::PreorderEquality(node<T>* n, BinarySearchTree<T>& rhs)
+bool BinarySearchTree<T>::PreorderEquality(BSTNode<T>* n, BinarySearchTree<T>& rhs)
 {
 	bool check = true;
 
@@ -155,6 +150,19 @@ template<typename T>
 bool BinarySearchTree<T>::operator==(BinarySearchTree<T>& rhs)
 {
 	return PreorderEquality(root, rhs);		
+}
+
+template<typename T>
+Iterator<BSTNode<T> > BinarySearchTree<T>::begin()
+{
+	//In order traversal to left most BSTNode
+	auto elem = root;
+	while (elem->left != nullptr)
+	{
+		elem = elem->left;
+	}
+
+	return Iterator<BSTNode<T> >(elem);
 }
 
 #endif
