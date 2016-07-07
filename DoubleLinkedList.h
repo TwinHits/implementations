@@ -29,8 +29,6 @@ DLLNode<T>* DLLNode<T>::operator+(int steps)
 template <typename T>
 class DoubleLinkedList 
 {
-	friend class Iterator<DLLNode<T> >;
-	
 	private:
 		int size;
 		DLLNode<T>* head;

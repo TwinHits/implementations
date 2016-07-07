@@ -10,7 +10,7 @@ class LLNode {
 		T data;
 		LLNode* next;
 
-		LLNode<T>* operator+(int steps);
+		LLNode<T>* operator+(int steps); 
 };
 
 template <typename T>
