@@ -34,6 +34,7 @@ class DoubleLinkedList
 	private:
 		int size;
 		DLLNode<T>* head;
+		DLLNode<T>* tail;
 
 	public:
 		DoubleLinkedList();
@@ -45,6 +46,7 @@ class DoubleLinkedList
 		void remove(T n);
 
 		Iterator<DLLNode<T> > begin();
+		Iterator<DLLNode<T> > end();
 };
 
 template <typename T>
@@ -73,7 +75,17 @@ void DoubleLinkedList<T>::insert(T input)
 		head->prev = insert;
 
 	head = insert;
+	
+	if (head->next == nullptr)
+		tail = head;
+
 	++size;
+}
+
+template <typename T>
+void DoubleLinkedList<T>::remove(Iterator<DLLNode<T> >& i)
+{
+	remove(i.node);
 }
 
 template <typename T>
@@ -95,6 +107,11 @@ void DoubleLinkedList<T>::remove(DLLNode<T>* n)
 			{
 				head = elem->next;
 				elem->prev = nullptr;
+			}
+			else if (elem == tail)
+			{
+				tail = elem->prev;
+				elem->next = nullptr;
 			}
 			else
 			{
@@ -142,12 +159,6 @@ void DoubleLinkedList<T>::remove(T n)
 	}
 }
 
-template <typename T>
-void DoubleLinkedList<T>::remove(Iterator<DLLNode<T> >& i)
-{
-	remove(i.node);
-}
-
 template<typename T>
 int DoubleLinkedList<T>::getSize()
 {
@@ -158,6 +169,12 @@ template<typename T>
 Iterator<DLLNode<T> > DoubleLinkedList<T>::begin()
 {
 	return Iterator<DLLNode<T> >(head);
+}
+
+template<typename T>
+Iterator<DLLNode<T> > DoubleLinkedList<T>::end()
+{
+	return Iterator<DLLNode<T> >(tail);
 }
 
 #endif

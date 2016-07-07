@@ -11,8 +11,8 @@ class Stack
 
 	public:
 		void push(T input);
-		T pop();
 		const T& peek();	
+		T pop();
 };
 
 template <typename T>
@@ -22,21 +22,21 @@ void Stack<T>::push(T input)
 }		
 
 template <typename T>
+const T& Stack<T>::peek()
+{
+	//add exception handling
+	return *(data.begin());
+}
+
+template <typename T>
 T Stack<T>::pop()
 {
 	//add exception handling
 	auto val = *(data.begin());
 	auto elem = data.begin();
 	data.remove(elem);
-
 	return val;
 }
 
-template <typename T>
-const T& Stack<T>::peek()
-{
-	//add exception handling
-	return *(data.begin());
-}
 
 #endif

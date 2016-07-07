@@ -106,7 +106,7 @@ void BinarySearchTree<T>::TreeInsert(BSTNode<T>*& n, T i)
 			n = new BSTNode<T>(i);
 		else if (i > n->data)
 			TreeInsert(n->right, i);
-		else if (i < n->data)
+		else if (i <= n->data)
 			TreeInsert(n->left, i);
 }
 

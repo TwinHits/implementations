@@ -27,8 +27,6 @@ LLNode<T>* LLNode<T>::operator+(int steps)
 template <typename T>
 class LinkedList 
 {
-	friend class Iterator<LLNode<T> >;
-	
 	private:
 		int size;
 		LLNode<T>* head;

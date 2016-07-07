@@ -4,9 +4,17 @@
 //Generic iterator for each data structure defined for easy traversal by other
 //code.
 
+template<typename T>
+class LinkedList;
+
+template<typename T>
+class DoubleLinkedList;
+
 template <typename N>
 class Iterator 
 {
+	friend class LinkedList<typename N::value_type>;
+	friend class DoubleLinkedList<typename N::value_type>;
 	
 	private:
 		N* node;
