@@ -1,7 +1,7 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
-#include "Iterator.h"
+#include "../pattern/Iterator.h"
 
 template <typename T>
 class DLLNode {

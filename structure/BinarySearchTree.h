@@ -1,7 +1,7 @@
 #ifndef BINARYSEARCHTREE_H
 #define BINARYSEARCHTREE_H
 
-#include "Iterator.h"
+#include "../pattern/Iterator.h"
 
 //A binary search tree is a top down set of BSTNodes with ptr's to the next BSTNodes
 //starting with the root.

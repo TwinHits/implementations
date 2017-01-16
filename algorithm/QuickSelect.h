@@ -1,6 +1,10 @@
 #ifndef QUICKSELECT_H
 #define QUICKSELECT_H
 
+//Complete except that it modifies the original array. Copying a new array into
+//the function is outside the scope of this project. This implementation is also
+//vulnerable to a bad pivot.
+
 template<typename T>
 T& QuickSelect(T arr[], int k, int first, int last)
 {
@@ -32,9 +36,9 @@ T& QuickSelect(T arr[], int k, int first, int last)
 		}
 	}
 
-	if (k <= pivotIndex) 
+	if (k < pivotIndex) 
 		QuickSelect(arr, k, first, pivotIndex);
-	else if (k > pivotIndex)
+	else if (k >= pivotIndex)
 		QuickSelect(arr, k, pivotIndex + 1, last);
 		
 	return arr[k];
