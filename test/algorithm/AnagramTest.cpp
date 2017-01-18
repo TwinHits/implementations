@@ -2,14 +2,19 @@
 
 #include "algorithm/Anagram.h"
 
-TEST (DISABLED_AnagramTest, Equality)
+TEST (AnagramTest, Equality)
 {
-	Anagram("cinema", "iceman", 6);
+	char first[] = "cinema";
+	char second[] = "iceman";
+	EXPECT_TRUE(Anagram(first, second, 6));
 }
 
-TEST (DISABLED_AnagramTest, Inequality)
+TEST (AnagramTest, Inequality)
 {
 
-	Anagram("john", "literally anything else", 4);
-	Anagram("john", "zach", 4);
+	char first[] = "john";
+	char second[] = "zach";
+	char third[] = "literally anything else";
+	EXPECT_FALSE(Anagram(first, second, 4));
+	EXPECT_FALSE(Anagram(first, third, 4));
 }
