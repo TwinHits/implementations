@@ -2,14 +2,14 @@
 
 #include "algorithm/CStringCompare.h"
 
-TEST(CStringCompareTest, Sucess)
+TEST (CStringCompareTest, Sucess)
 {
 	EXPECT_TRUE(CStringCompare("one", "one"));
 	EXPECT_TRUE(CStringCompare("four", "four"));
 	EXPECT_TRUE(CStringCompare( "fives", "fives"));
 }
 
-TEST(CStringCompareTest, Failure)
+TEST (CStringCompareTest, Failure)
 {
 	EXPECT_FALSE(CStringCompare("one", "ote"));
 	EXPECT_FALSE(CStringCompare("three", "one"));
