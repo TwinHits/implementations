@@ -5,7 +5,7 @@ TEST_CPP_FILES = ${wildcard test/algorithm/*.cpp}
 OBJ_FILES = ${addprefix bin/objs/,${notdir ${SRC_CPP_FILES:.cpp=.o}}} ${addprefix bin/objs/,${notdir ${TEST_CPP_FILES:.cpp=.o}}}
 
 CC_FLAGS = -g -Wall -Werror -std=c++11
-LD_FLAGS = -lgtest -lgtest_main -lpthread
+LD_FLAGS = -lgtest -lgtest_main -lpthread -lgmock -lgmock_main
 IN_FLAGS = -Iinclude
 WN_FLAGS = -Wno-write-strings
 
