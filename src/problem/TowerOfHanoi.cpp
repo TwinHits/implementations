@@ -1,5 +1,4 @@
-#ifndef TOWEROFHANOI
-#define TOWEROFHANOI_H
+#include "include/TowerOfHanoi.h"
 
 void move(const int n, const int fromTower, const int toTower, const int spareTower)
 {
@@ -10,5 +9,3 @@ void move(const int n, const int fromTower, const int toTower, const int spareTo
 		move((n-1), spareTower, toTower, fromTower);
 	}
 }
-
-#endif
