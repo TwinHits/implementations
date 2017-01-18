@@ -1,4 +1,4 @@
-#include "CStringCompare.h"
+#include "algorithm/CStringCompare.h"
 
 bool CStringCompare(char* first, char* second) 
 {

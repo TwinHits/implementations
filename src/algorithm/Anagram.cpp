@@ -1,5 +1,5 @@
-#include "QuickSort.h"
-#include "CStringCompare.h" 
+#include "algorithm/QuickSort.h"
+#include "algorithm/CStringCompare.h" 
 
 /*******************
 The algorithm for solving anagrams is to sort the strings and compare them to one another. Alternatively, you can count up the number of each characters and if both maps of counts are the same, then they are anagrams.
