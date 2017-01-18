@@ -18,9 +18,6 @@ bin/run: ${OBJ_FILES}
 bin/objs/%.o: src/algorithm/%.cpp
 	g++ ${CC_FLAGS} ${IN_FLAGS} ${WN_FLAGS} -c -o $@ $<
 
-bin/objs/%.o: src/structure/%.cpp
-	g++ ${CC_FLAGS} ${IN_FLAGS} ${WN_FLAGS} -c -o $@ $<
-
 bin/objs/%.o: src/problem/%.cpp
 	g++ ${CC_FLAGS} ${IN_FLAGS} ${WN_FLAGS} -c -o $@ $<
 

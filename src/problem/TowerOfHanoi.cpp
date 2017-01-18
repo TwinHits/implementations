@@ -1,4 +1,6 @@
-#include "include/TowerOfHanoi.h"
+#include <iostream>
+
+#include "problem/TowerOfHanoi.h"
 
 void move(const int n, const int fromTower, const int toTower, const int spareTower)
 {
