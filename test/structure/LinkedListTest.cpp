@@ -2,7 +2,6 @@
 
 #include "structure/LinkedList.h"
 
-
 TEST (LinkedListTest, GetSize)
 {
 	LinkedList<int> mock;
@@ -74,9 +73,4 @@ TEST (LinkedListTest, RemoveByIterator)
 	auto iter = mock.begin();
 	EXPECT_EQ(7, *iter);
 	EXPECT_EQ(9, *(iter + 1));
-}
- 
-TEST (LinkedListTest, RemoveByNode)
-{
-
 }

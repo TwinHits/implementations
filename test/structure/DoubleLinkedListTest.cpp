@@ -2,13 +2,11 @@
 
 #include "structure/DoubleLinkedList.h"
 
-
 TEST (DoubleLinkedListTest, GetSize)
 {
 	DoubleLinkedList<int> mock;
 	EXPECT_EQ(0, mock.getSize());
 }
-
 TEST (DoubleLinkedListTest, GetBeginIterator)
 {
 	DoubleLinkedList<int> mock;
