@@ -31,13 +31,13 @@ class LinkedList
 		int size;
 		LLNode<T>* head;
 
+		void remove(LLNode<T>* n);
 	public:
 		LinkedList();
 		~LinkedList();
 		int getSize();
 		void insert(T input);
 		void remove(Iterator<LLNode<T> >& i);
-		void remove(LLNode<T>* n);
 		void remove(T n);
 
 		Iterator<LLNode<T> > begin();

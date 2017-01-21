@@ -1,5 +1,5 @@
-#ifndef LINKEDLIST_H
-#define LINKEDLIST_H
+#ifndef DOUBLELINKEDLIST_H
+#define DOUBLELINKEDLIST_H
 
 #include "../pattern/Iterator.h"
 
@@ -51,6 +51,8 @@ template <typename T>
 DoubleLinkedList<T>::DoubleLinkedList()
 {
 	head = nullptr;
+	tail = nullptr;
+	size = 0;
 }
 
 template <typename T>
@@ -108,8 +110,8 @@ void DoubleLinkedList<T>::remove(DLLNode<T>* n)
 			}
 			else if (elem == tail)
 			{
-				tail = elem->prev;
-				elem->next = nullptr;
+				tail = tail->prev;
+				tail->next = nullptr;
 			}
 			else
 			{
@@ -143,6 +145,11 @@ void DoubleLinkedList<T>::remove(T n)
 			{
 				head = elem->next;
 				elem->prev = nullptr;
+			}
+			else if (elem == tail)
+			{
+				tail = tail->prev;
+				tail->next = nullptr;
 			}
 			else
 			{
