@@ -50,8 +50,8 @@ EuclideanVector<T>::EuclideanVector(T x1, T y1, T x2, T y2)
 
 	if (y >= 0 && x >= 0)
 		direction = direction;	
-	else if	(x < 0 && x < 0)
-		direction = direction - 180;
+	else if	(x < 0 && y < 0)
+		direction = direction;
 	else
 		direction = direction + 180;
 }

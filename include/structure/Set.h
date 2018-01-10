@@ -5,8 +5,7 @@
 
 template <typename T>
 class Set
-{
-	friend class BinarySearchTree<T>;
+{ friend class BinarySearchTree<T>;
 
 	public:
 		bool search(T i);

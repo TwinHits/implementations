@@ -10,14 +10,17 @@ class LinkedList;
 template<typename T>
 class DoubleLinkedList;
 
+template<typename T>
+class BinarySearchTree;
+
 template <typename N>
 class Iterator 
 {
 	friend class LinkedList<typename N::value_type>;
 	friend class DoubleLinkedList<typename N::value_type>;
+	friend class BinarySearchTree<typename N::value_type>;
 	
-	private:
-		N* node;
+	private: N* node;
 
 	public:
 		Iterator(N* n) : node(n) {};

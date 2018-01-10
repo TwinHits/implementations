@@ -13,10 +13,11 @@ class BSTNode
 		typedef T value_type;
 
 		T data;
+		BSTNode<T>* parent;
 		BSTNode<T>* left;
 		BSTNode<T>* right;
 
-		BSTNode(T i);
+		BSTNode(T i, BSTNode<T>* p);
 		BSTNode<T>* operator+(int steps);
 };
 
@@ -26,15 +27,20 @@ BSTNode<T>* BSTNode<T>::operator+(int steps)
 	auto tmp = this;
 	while (steps > 0)
 	{
+		if (tmp->right != nullptr)
+			tmp = tmp->right;
+
+
 		--steps;		
 	}
 	return tmp;
 }
 
 template <typename T>
-BSTNode<T>::BSTNode(T i)
+BSTNode<T>::BSTNode(T i, BSTNode<T>* p)
 {
 	data = i;
+	parent = p;	
 	left = nullptr;
 	right = nullptr;
 }
@@ -46,7 +52,7 @@ class BinarySearchTree
 		BSTNode<T>* root = nullptr;
 		int size = 0;
 		bool TreeSearch(BSTNode<T>* r, T i);
-		void TreeInsert(BSTNode<T>*& r, T i);
+		void TreeInsert(BSTNode<T>*& n, T i, BSTNode<T>* parent);
 		int CheckBalance(BSTNode<T>* n);
 		bool PreorderEquality(BSTNode<T>* n, BinarySearchTree<T>& rhs);
 
@@ -70,7 +76,7 @@ bool BinarySearchTree<T>::search(T i)
 template <typename T>
 void BinarySearchTree<T>::insert(T i)
 {
-	TreeInsert(root, i);
+	TreeInsert(root, i, nullptr);
 	size++;
 }
 
@@ -100,14 +106,14 @@ bool BinarySearchTree<T>::TreeSearch(BSTNode<T>* r, T i)
 }
 
 template <typename T>
-void BinarySearchTree<T>::TreeInsert(BSTNode<T>*& n, T i)
+void BinarySearchTree<T>::TreeInsert(BSTNode<T>*& n, T i, BSTNode<T>* parent)
 {
 		if (n == nullptr)
-			n = new BSTNode<T>(i);
+			n = new BSTNode<T>(i, parent);
 		else if (i > n->data)
-			TreeInsert(n->right, i);
+			TreeInsert(n->right, i, n);
 		else if (i <= n->data)
-			TreeInsert(n->left, i);
+			TreeInsert(n->left, i, n);
 }
 
 template<typename T>
